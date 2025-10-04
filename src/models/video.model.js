@@ -1,53 +1,47 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
-const videoSchema = new mongoose.Schema(
-  {
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    videoFile: {
-      type,
-    },
-    thumbnail: {
-      type: String,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    isPublic: {
-      type: Boolean,
-      default: true,
-    },
-    views: {
-      type: Number,
-      default: 0,
-    },
-    likes: [
-      {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
+const videoSchema = new Schema(
+    {
+        videoFile: {
+            type: String, //cloudinary url
+            required: true
         },
-        createdAt: {
-          type: Date,
-          default: Date.now,
+        thumbnail: {
+            type: String, //cloudinary url
+            required: true
         },
-      },
-    ],
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
-  },
-  { timestamps: true }
-);
-videoSchema.plugin(mongooseAggregatePaginate);
-export const Video = mongoose.model("Video", videoSchema);
+        title: {
+            type: String, 
+            required: true
+        },
+        description: {
+            type: String, 
+            required: true
+        },
+        duration: {
+            type: Number, 
+            required: true
+        },
+        views: {
+            type: Number,
+            default: 0
+        },
+        isPublished: {
+            type: Boolean,
+            default: true
+        },
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+
+    }, 
+    {
+        timestamps: true
+    }
+)
+
+videoSchema.plugin(mongooseAggregatePaginate)
+
+export const Video = mongoose.model("Video", videoSchema)
