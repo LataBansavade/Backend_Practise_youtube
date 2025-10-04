@@ -1,5 +1,5 @@
 import asyncHandler from "../utils/asyncHandler.js";
-import {apiError} from "../utils/apiErrors.js"
+import apiError from "../utils/apiErrors.js"
 import {User} from "../models/user.model.js";
 import {uploadOnCloudinary}  from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/apiResponse.js";
@@ -30,7 +30,8 @@ const registerUser = asyncHandler(async(req, res) => {
         throw new apiError(409, "User already exists with this email or username");
     }
 
-    req.files && console.log(req.files);
+    req.files && console.log("req.files------------->>>>>>>>", req.files);
+
    const avatarLocalFile = req.files?.avatar[0]?.path;
     const coverImageLocalFile = req.files?.coverImage?.[0]?.path;
    if (!avatarLocalFile) {
@@ -58,7 +59,7 @@ const registerUser = asyncHandler(async(req, res) => {
     )
 
     if (!createdUser) {
-        throw new ApiError(500, "Something went wrong while registering the user")
+        throw new apiError(500, "Something went wrong while registering the user")
     }
 
     return res.status(201).json(
