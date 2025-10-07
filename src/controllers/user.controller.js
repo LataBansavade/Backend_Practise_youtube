@@ -240,12 +240,16 @@ const changePassword = asyncHandler(async(req,res)=>{
 
 
 const getCurrentUser = asyncHandler(async(req,res)=>{
+    if(!req.user){
+        throw new apiError(404, "User not found")
+    }
     return res.status(200).json(new apiResponse(200, req.user, " current User fetched successfully"))
     
 })
 
 const updateUserDetails = asyncHandler(async(req, res) => {
-    const {fullName, email} = req.body
+    const { fullName, email } = req.body || {};
+    console.log('updateUserDetails req.body:', req.body);
 
     if (!fullName || !email) {
         throw new apiError(400, "All fields are required")

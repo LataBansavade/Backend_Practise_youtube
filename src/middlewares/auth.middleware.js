@@ -9,7 +9,7 @@ export const verifyJWT = asyncHandler(async(req, _, next) => {
         
         // console.log(token);
         if (!token) {
-            throw new apiError(401, "Unauthorized request")
+            throw new apiError(401, "Unauthorized request- no access token found ,please login to access this route")
         }
     
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
